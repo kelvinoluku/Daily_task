@@ -1,0 +1,134 @@
+{% extends "calendar_app/base.html" %}
+{% load static %}
+{% block title %}Tasks{% endblock %}
+{% block content %}
+<header>
+    <h1>My Tasks</h1>        
+</header>
+<!-- HTML -->
+<div id="task-list">
+    <!-- Task list will be displayed here -->
+</div>
+
+<button id="add-task">Add Task</button>
+
+<!-- Modal for task creation/edit -->
+<div id="task-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modal-title">Create Task</h2>
+        <input type="text" id="task-name" placeholder="Task Name">
+        <input type="date" id="due-date">
+        <button id="save-task">Save</button>
+        <button id="delete-task" style="display: none;">Delete</button>
+    </div>
+</div>
+
+<script src="{% static 'calendar_app/js/tasks.js' %}" defer></script>
+<script>
+    // JavaScript
+    const taskList = document.getElementById("task-list");
+    const addTaskButton = document.getElementById("add-task");
+    const taskModal = document.getElementById("task-modal");
+    const taskNameInput = document.getElementById("task-name");
+    const dueDateInput = document.getElementById("due-date");
+    const saveTaskButton = document.getElementById("save-task");
+    const deleteTaskButton = document.getElementById("delete-task");
+    const modalTitle = document.getElementById("modal-title");
+    const closeBtn = document.querySelector(".close");
+
+    let editingTaskId = null;
+
+    // Function to open the task modal for creation/editing
+    function openTaskModal() {
+        taskNameInput.value = "";
+        dueDateInput.value = "";
+        modalTitle.textContent = "Create Task";
+        deleteTaskButton.style.display = "none";
+        taskModal.style.display = "block";
+    }
+
+    // Function to close the task modal
+    function closeTaskModal() {
+        taskModal.style.display = "none";
+        editingTaskId = null;
+    }
+
+    // Event listener to open the task modal on button click
+    addTaskButton.addEventListener("click", openTaskModal);
+
+    // Event listener to close the task modal when the close button is clicked
+    closeBtn.addEventListener("click", closeTaskModal);
+
+    // Function to render tasks
+    function renderTasks(tasks) {
+        taskList.innerHTML = "";
+        tasks.forEach((task) => {
+            const taskItem = document.createElement("div");
+            taskItem.classList.add("task-item");
+            taskItem.innerHTML = `
+                <h3>${task.name}</h3>
+                <p>Due Date: ${task.due_date}</p>
+                <button class="edit-task" data-id="${task.id}">Edit</button>
+                <button class="delete-task" data-id="${task.id}">Delete</button>
+            `;
+            taskList.appendChild(taskItem);
+        });
+    }
+
+    // Function to fetch and display tasks
+    function fetchTasks() {
+        // You need to implement this part to fetch tasks from your Django API
+        // Use fetch or an AJAX library to make an API request to get tasks
+    }
+
+    // Initial fetch and render tasks
+    fetchTasks();
+
+    // Event listener to handle task editing
+    taskList.addEventListener("click", (e) => {
+        if (e.target.classList.contains("edit-task")) {
+            const taskId = e.target.getAttribute("data-id");
+            editingTaskId = taskId;
+            const taskToEdit = tasks.find((task) => task.id === taskId);
+            if (taskToEdit) {
+                openTaskModal();
+                modalTitle.textContent = "Edit Task";
+                taskNameInput.value = taskToEdit.name;
+                dueDateInput.value = taskToEdit.due_date;
+                deleteTaskButton.style.display = "block";
+            }
+        }
+    });
+
+    // Event listener to handle task deletion
+    deleteTaskButton.addEventListener("click", () => {
+        if (editingTaskId) {
+            // You need to implement this part to delete a task using your Django API
+            // Use fetch or an AJAX library to make an API request to delete the task
+            // After deletion, close the modal and fetch and render tasks again
+            // Reset editingTaskId to null
+        }
+    });
+
+    // Event listener to handle task creation/editing
+    saveTaskButton.addEventListener("click", () => {
+        const taskName = taskNameInput.value;
+        const dueDate = dueDateInput.value;
+
+        if (taskName && dueDate) {
+            if (editingTaskId) {
+                // You need to implement this part to update a task using your Django API
+                // Use fetch or an AJAX library to make an API request to update the task
+                // After updating, close the modal and fetch and render tasks again
+                // Reset editingTaskId to null
+            } else {
+                // You need to implement this part to create a new task using your Django API
+                // Use fetch or an AJAX library to make an API request to create the task
+                // After creation, close the modal and fetch and render tasks again
+            }
+        }
+    });
+</script>
+
+{% endblock content %}
