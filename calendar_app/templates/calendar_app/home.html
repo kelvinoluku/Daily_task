@@ -1,6 +1,6 @@
 {% extends "calendar_app/base.html" %}
 {% load static %}
-{% block title %}Calendar{% endblock %}
+{% block title %}Calendar-Today{% endblock %}
 {% block link %}<link rel="stylesheet" href="{% static 'calendar_app/css/calendar.css' %}">{% endblock %}
 {% block content %}
     <div class="calendar">
@@ -18,7 +18,6 @@
                 </tr>
             </thead>
             <tbody id="calendar-body">
-                <!-- Calendar cells will be generated here -->
             </tbody>
         </table>
     </div>

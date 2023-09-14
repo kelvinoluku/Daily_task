@@ -1,0 +1,19 @@
+{% extends "calendar_app/base.html" %}
+{% load static %}
+{% block title %}Create Task{% endblock %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-botton mb-4">Delete Task</legend>
+                <p>Are you sure you want to delete the task? </p>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-danger" type="submit">Yes, Delete</button>
+                <a class="btn btn-outline-secondary" href="{% url 'task-detail' object.id %}">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}

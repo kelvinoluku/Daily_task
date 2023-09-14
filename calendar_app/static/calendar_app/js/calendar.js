@@ -51,4 +51,10 @@ function generateCalendar(year, month) {
 const currentDate = new Date();
 const currentYear = currentDate.getFullYear();
 const currentMonth = currentDate.getMonth();
+const currentDay = currentDate.getDate();
+
 generateCalendar(currentYear, currentMonth);
+
+const today = new Date(currentYear, currentMonth, currentDay);
+
+document.getElementById('today-date-input').value = today.toISOString();

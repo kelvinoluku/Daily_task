@@ -1,0 +1,19 @@
+{% extends "calendar_app/base.html" %}
+{% load static %}
+{% block title %}Tasks{% endblock %}
+{% block content %}
+    <h2>Task</h2>
+        <article class=""media content-section>
+            <div class="media-body">
+                <div class="article-metadata" id="task-list">
+                </div>
+            <p class="article-content">{{ object.task }}</p>
+            <small class="text-muted">{{ object.date_due|date:"F jS, Y" }}</small>
+            </div>
+        </article>
+        {% if object.author == user %}
+            <button class="btn btn-outline-secondary btn-sm"><a href="{% url 'task-update' post.id %}">Update Task</a></button>
+            <button class="btn btn-outline-danger btn-sm"><a href="{% url 'task-delete' post.id %}">Delete Task</a></button>
+        {% endif %}
+
+{% endblock content %}
